@@ -5,24 +5,24 @@ using Unity.VisualScripting;
 
 public class PauseMenu : MonoBehaviour
 {
-     public static PauseMenu Instance { get; private set; }
+    public static PauseMenu Instance { get; private set; }
     public static bool isPaused = false; // Tracks whether the game is paused
     public GameObject pauseMenuUI;       // UI panel for the pause menu
     public GameObject player;            // Reference to the player GameObject
     public Pistol pistolScript;          // Reference to the Pistol script
     public Button resumeButton;          // Reference to the Resume button
-    public Button ExitButton; 
+    public Button ExitButton;
     public Button reportBugButton;
     public Button settingsBtn;
     public GameObject settingsUI;
     public GameSettings GameSettings;
     public AudioSource Click;
 
-    
 
 
 
- void Awake()
+
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -43,19 +43,19 @@ public class PauseMenu : MonoBehaviour
         {
             resumeButton.onClick.AddListener(Resume);
         }
-         if (ExitButton != null)
+        if (ExitButton != null)
         {
             ExitButton.onClick.AddListener(ExitToMainMenu);
         }
-         if (reportBugButton != null)
+        if (reportBugButton != null)
         {
             reportBugButton.onClick.AddListener(ReportBug);
         }
-          if (settingsBtn != null)
+        if (settingsBtn != null)
         {
             settingsBtn.onClick.AddListener(SettingsBtn);
         }
-        
+
 
 
         Resume(); // Ensure the game starts in a resumed state
@@ -78,20 +78,20 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-             Click.Play();
+        Click.Play();
         pauseMenuUI.SetActive(false);
-       if (GameSettings.soundOnStat == false)
-            {
-                AudioListener.pause = true; 
-                // Your code here
-            }
+        if (GameSettings.soundOnStat == false)
+        {
+            AudioListener.pause = true;
+
+        }
         if (GameSettings.soundOnStat == true)
-            {
-                AudioListener.pause = false; 
-                // Your code here
-            }
+        {
+            AudioListener.pause = false;
+
+        }
         Time.timeScale = 1f;
-       
+
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -105,15 +105,15 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
-             Click.Play();
+        Click.Play();
         Time.timeScale = 0f;
-        
-         if (GameSettings.soundOnStat == true)
-            {
-                AudioListener.pause = true; 
-                // Your code here
-            }
-    
+
+        if (GameSettings.soundOnStat == true)
+        {
+            AudioListener.pause = true;
+
+        }
+
         isPaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -126,32 +126,36 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
-             Click.Play();
+        Click.Play();
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()
     {
-             Click.Play();
+        Click.Play();
         Application.Quit();
-        
+
     }
-       private void ExitToMainMenu()
-    {     Click.Play();
+    private void ExitToMainMenu()
+    {
+        Click.Play();
         // Assuming "MainMenu" is the name of your main menu scene
         Time.timeScale = 1f; // Ensure the game is unpaused before changing scenes
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
-       private void ReportBug()
-    {     Click.Play();
+    private void ReportBug()
+    {
+        Click.Play();
         // Opens the bug reporting URL in the browser
-        Application.OpenURL("https://www.google.com");
+        Application.OpenURL("https://ward21.info.gf/Report_Bugs");
     }
-    public void SettingsBtn(){
-             Click.Play();
-        if (settingsBtn != null){
-                settingsUI.SetActive(true);
+    public void SettingsBtn()
+    {
+        Click.Play();
+        if (settingsBtn != null)
+        {
+            settingsUI.SetActive(true);
         }
 
     }

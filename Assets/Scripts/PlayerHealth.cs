@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Maximum health
     public float currentHealth;    // Current health
-    public GameObject deathUI; 
+    public GameObject deathUI;
 
     public KeyCode healingKey = KeyCode.H;
 
@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviour
     public GameObject health2;               // Inventory slot for the second health item
     public GameObject health3;               // Inventory slot for the third health item
 
-               // Message to display when picking up health items
+    // Message to display when picking up health items
 
 
     public GameObject NoHelthItemsText;
@@ -38,29 +38,31 @@ public class PlayerHealth : MonoBehaviour
     private bool canHeal = true;             // Flag to check if player can heal
 
     private HealingArmAnimation healingArmAnimation;
-    
+
     [SerializeField] private Pistol pistolAnimation;
 
     private void Start()
     {
-       
+
         helthMax();
         audioSource = GetComponent<AudioSource>();
 
 
-        healingArmAnimation = FindObjectOfType<HealingArmAnimation>(); 
-        pistolAnimation = FindObjectOfType<Pistol>(); 
+        healingArmAnimation = FindObjectOfType<HealingArmAnimation>();
+        pistolAnimation = FindObjectOfType<Pistol>();
 
 
-     
-           DeactivateBloodEffects();
+
+        DeactivateBloodEffects();
     }
 
-    void Update(){
-        if (Input.GetKeyDown(healingKey)){
+    void Update()
+    {
+        if (Input.GetKeyDown(healingKey))
+        {
             UseHealthItem();
         }
-  
+
 
     }
 
@@ -75,9 +77,9 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player took damage: " + damage + ", Remaining health: " + currentHealth); // Log current health
 
 
-          UpdateBloodEffects(); // Update blood effect visuals
+        UpdateBloodEffects(); // Update blood effect visuals
 
-      
+
         if (currentHealth <= 0)
         {
             Die(); // Handle player death
@@ -96,124 +98,132 @@ public class PlayerHealth : MonoBehaviour
         {
             audioSource.PlayOneShot(deathSound); // Play death sound
         }
-        
-       // Pause the game
-    Time.timeScale = 0f;
 
-    // Activate the Death UI
-    if (deathUI != null)
-    {
-        deathUI.SetActive(true);
-    }
+        // Pause the game
+        Time.timeScale = 0f;
 
-    // Optionally disable player controls or other logic related to player death
-    Debug.Log("Player has died. Game paused and Death UI displayed.");
+        // Activate the Death UI
+        if (deathUI != null)
+        {
+            deathUI.SetActive(true);
+        }
+
+        // Optionally disable player controls or other logic related to player death
+        Debug.Log("Player has died. Game paused and Death UI displayed.");
     }
 
     // Method to restore health (e.g., when picking up health packs)
     public void RestoreHealth(float amount)
     {
-       // if (isDead) return; // Can't restore health if already dead
+        // if (isDead) return; // Can't restore health if already dead
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth); // Restore health and clamp it to maxHealth
-        Debug.Log("Player helth restored" + currentHealth );
-      
+        Debug.Log("Player helth restored" + currentHealth);
+
     }
 
+    public IEnumerator noHeals()
+    {
+        Debug.Log("Player can not use helth items ");
+        NoHelthItemsText.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        NoHelthItemsText.SetActive(false);
 
+    }
 
     // Method to use a health item
 
 
     public void UseHealthItem()
-{
-    if (canHeal && (health1.activeSelf || health2.activeSelf || health3.activeSelf))
     {
-        Debug.Log("Player can use helth items " );
-        UseHealthItemCoroutine();
-         
-    }
-    else if (!health1.activeSelf && !health2.activeSelf && !health3.activeSelf)
-    {
-         Debug.Log("Player can not use helth items " );
-        NoHelthItemsText.SetActive(true);
-       
-    }
-}
+        if (canHeal && (health1.activeSelf || health2.activeSelf || health3.activeSelf))
+        {
+            Debug.Log("Player can use helth items ");
+            UseHealthItemCoroutine();
 
-private void UseHealthItemCoroutine()
-{
- 
-    if (pistolAnimation == null)
-    {
-    pistolAnimation = FindObjectOfType<Pistol>();
-    Debug.Log("Pistol reference reassigned dynamically before calling the method");
+        }
+        else if (!health1.activeSelf && !health2.activeSelf && !health3.activeSelf)
+        {
+            StartCoroutine(noHeals());
 
-    Debug.Log("calling pistal for health");
-            pistolAnimation.TurnOnHealAnimation(); // Turn ON the healing animation
+
+        }
     }
-    else{
-        Debug.Log("calling pistal for health");
+
+    private void UseHealthItemCoroutine()
+    {
+
+        if (pistolAnimation == null)
+        {
+            pistolAnimation = FindObjectOfType<Pistol>();
+            Debug.Log("Pistol reference reassigned dynamically before calling the method");
+
+            Debug.Log("calling pistal for health");
             pistolAnimation.TurnOnHealAnimation(); // Turn ON the healing animation
-    }
-      
-     if (healingArmAnimation != null) 
+        }
+        else
+        {
+            Debug.Log("calling pistal for health");
+            pistolAnimation.TurnOnHealAnimation(); // Turn ON the healing animation
+        }
+
+        if (healingArmAnimation != null)
         {
             Debug.Log("calling heal arm for health");
             healingArmAnimation.TurnOnHealAnimation(); // Turn ON the healing animation
-             
+
         }
 
-   
-    if (health3.activeSelf & UiInjection03.activeSelf)
-    {
-        health3.SetActive(false);
-        UiInjection03.SetActive(false);
+
+        if (health3.activeSelf & UiInjection03.activeSelf)
+        {
+            health3.SetActive(false);
+            UiInjection03.SetActive(false);
+        }
+        else if (health2.activeSelf & UiInjection02.activeSelf)
+        {
+            health2.SetActive(false);
+            UiInjection02.SetActive(false);
+        }
+        else if (health1.activeSelf & UiInjection01.activeSelf)
+        {
+            health1.SetActive(false);
+            UiInjection01.SetActive(false);
+        }
+
+
+
+        RestoreHealth(50); // Increase health by 50
+        UpdateBloodEffectsWhenHeal();
+        StartCoroutine(HealCooldown()); // Start the heal cooldown
+
     }
-    else if (health2.activeSelf & UiInjection02.activeSelf)
-    {
-        health2.SetActive(false);
-        UiInjection02.SetActive(false);
-    }
-    else if (health1.activeSelf & UiInjection01.activeSelf)
-    {
-        health1.SetActive(false);
-        UiInjection01.SetActive(false);
-    }
-
-
-
-    RestoreHealth(50); // Increase health by 50
-    UpdateBloodEffectsWhenHeal();
-    StartCoroutine(HealCooldown()); // Start the heal cooldown
-
-}
 
 
     // Coroutine for heal cooldown
     private IEnumerator HealCooldown()
     {
         yield return new WaitForSeconds(3f);
-        if (healingArmAnimation != null) 
-            {
+        if (healingArmAnimation != null)
+        {
             healingArmAnimation.TurnOffHealAnimation(); // Turn ON the healing animation
-            }
-        if (pistolAnimation != null) 
+        }
+        if (pistolAnimation != null)
         {
             pistolAnimation.TurnOffHealAnimation(); // Turn ON the healing animation
-             
+
         }
         canHeal = false; // Disable healing
         yield return new WaitForSeconds(5f);
         canHeal = true; // Enable healing
     }
 
- 
+
     /// Updates the blood effect visuals based on the player's current health.
     public void UpdateBloodEffects()
     {
         // Deactivate all blood images first
-       // DeactivateBloodEffects();
+        // DeactivateBloodEffects();
 
         // Activate images based on current health
         if (currentHealth < 80) bloodImage1.gameObject.SetActive(true);
@@ -222,9 +232,9 @@ private void UseHealthItemCoroutine()
         if (currentHealth < 20) bloodImage4.gameObject.SetActive(true);
     }
 
-        public void UpdateBloodEffectsWhenHeal()
+    public void UpdateBloodEffectsWhenHeal()
     {
-       
+
         // Activate images based on current health
         if (currentHealth > 80) bloodImage4.gameObject.SetActive(false);
         if (currentHealth > 60) bloodImage3.gameObject.SetActive(false);
@@ -243,8 +253,9 @@ private void UseHealthItemCoroutine()
         if (UiInjection01) UiInjection02.gameObject.SetActive(false);
         if (UiInjection01) UiInjection03.gameObject.SetActive(false);
     }
-    public void helthMax(){
-         currentHealth = maxHealth;
+    public void helthMax()
+    {
+        currentHealth = maxHealth;
 
     }
 }

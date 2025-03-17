@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;  // Include TextMeshPro namespace
+using TMPro;
 
 public class GoodEnding : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public class GoodEnding : MonoBehaviour
     public PlayerController playerController;
     public GameObject healArm;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         if (Continue != null)
@@ -30,20 +30,19 @@ public class GoodEnding : MonoBehaviour
     {
         EndingSong.Play();
         Debug.Log("song played");
-       
+
         if (OneLineSubs != null)
         {
             OneLineSubs.StartOneLineSub(); // Start the subtitles
         }
 
-        // Start the coroutine to wait for 5 seconds after the subtitles finish
-        //StartCoroutine(WaitForSubtitlesAndEnableContinue(5f)); // Adjust the time if needed
+
     }
     private void OnEnable()
     {
         StartCoroutine(WaitForSubtitlesAndEnableContinue(30f));
 
-         if (pistolScript == null && player != null)
+        if (pistolScript == null && player != null)
         {
             pistolScript = player.GetComponent<Pistol>();
         }
@@ -52,16 +51,16 @@ public class GoodEnding : MonoBehaviour
             playerController = player.GetComponent<PlayerController>();
         }
         // Deactivate both scripts to prevent player movement and gun usage during subtitles
-if (pistolScript != null)
-{
-    pistolScript.enabled = false;  // Disable the pistol script (prevents shooting and other related actions)
-}
+        if (pistolScript != null)
+        {
+            pistolScript.enabled = false;  // Disable the pistol script (prevents shooting and other related actions)
+        }
 
-if (playerController != null)
-{
-    playerController.enabled = false;;  // Disable the player movement script (prevents movement)
-}
-healArm.SetActive(false);
+        if (playerController != null)
+        {
+            playerController.enabled = false; ;  // Disable the player movement script (prevents movement)
+        }
+        healArm.SetActive(false);
     }
 
 
@@ -73,7 +72,7 @@ healArm.SetActive(false);
         if (Continue != null)
         {
             Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+            Cursor.visible = true;
             Continue.gameObject.SetActive(true); // Show the Continue button after waiting
         }
     }
@@ -90,6 +89,6 @@ healArm.SetActive(false);
         credits.SetActive(true);
         goodEndUi.SetActive(false);
 
-        // Handle credit screen transitions (as per your original code)
+
     }
 }

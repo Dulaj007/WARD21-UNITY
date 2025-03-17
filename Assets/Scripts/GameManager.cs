@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public GameObject player; // Drag and drop the Player object here in the Inspector
-    public Button loadButton; // Drag the Load button here in the Inspector
-    public Button saveButton; 
+    public GameObject player;
+    public Button loadButton;
+    public Button saveButton;
 
     private string savePath;
     public GameData LoadedGameData;
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadGame()
     {
-        
+
         PauseMenu.Instance.Resume();
 
         if (!File.Exists(savePath))
@@ -77,8 +77,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game data loaded. Restarting the scene...");
 
             // Reload the current scene
-              ApplyLoadedGameData();
-           // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            ApplyLoadedGameData();
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {

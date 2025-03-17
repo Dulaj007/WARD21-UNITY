@@ -16,11 +16,10 @@ public class AmmoPickup : MonoBehaviour
         if (pickUpText != null)
         {
             pickUpText.SetActive(false); // Hide the pick-up text initially
-           
+
         }
 
-        // Find the Pistol script attached to the player
-    
+
     }
 
     void Update()
@@ -28,12 +27,12 @@ public class AmmoPickup : MonoBehaviour
         // Check for pick-up interaction
         if (inReach && Input.GetKeyDown(KeyCode.T))
         {
-                playerPistol = FindObjectOfType<Pistol>();
-        if (playerPistol == null)
-        {
-            Debug.Log("Pistol script not found in the scene.");
-        }
-             Debug.Log("Calling pick up ammo.");
+            playerPistol = FindObjectOfType<Pistol>();
+            if (playerPistol == null)
+            {
+                Debug.Log("Pistol script not found in the scene.");
+            }
+            Debug.Log("Calling pick up ammo.");
             PickUpAmmo();
         }
     }
@@ -46,7 +45,7 @@ public class AmmoPickup : MonoBehaviour
             if (pickUpText != null)
             {
                 pickUpText.SetActive(true); // Show the pick-up text
-               
+
             }
         }
     }

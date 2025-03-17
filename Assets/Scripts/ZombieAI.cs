@@ -18,8 +18,10 @@ public class ZombieAI : MonoBehaviour
 
     private Vector3 startingPosition;      // The zombie's starting position
     private bool isReturning = false;      // Flag to track if the zombie is returning to its starting position
-    
+
     public ZombieSouns ZombieSounds;
+
+    public ZombieHealth ZombieHealth;
     // Animator parameter hashes
     private static readonly int IdleParameter = Animator.StringToHash("Idle");
     private static readonly int WalkParameter = Animator.StringToHash("Walk");
@@ -41,18 +43,18 @@ public class ZombieAI : MonoBehaviour
         {
             Debug.LogWarning("NavMeshAgent is not on a valid NavMesh surface.");
         }
-        
-          
 
 
-         // Initialize to idle state
-   
+
+
+        // Initialize to idle state
+
         animator.SetBool(IdleParameter, true);
         animator.SetBool(WalkParameter, false);
         animator.SetBool(AttackParameter, false);
         animator.SetBool(DamageParameter, false);
 
-    Debug.Log("Zombie initialized in Idle state at starting position.");
+        Debug.Log("Zombie initialized in Idle state at starting position.");
 
         // Start coroutine to delay setting the starting position
         StartCoroutine(SetStartingPositionAfterDelay(1.0f));
@@ -60,24 +62,30 @@ public class ZombieAI : MonoBehaviour
 
     }
 
-     private IEnumerator SetStartingPositionAfterDelay(float delay)
+    private IEnumerator SetStartingPositionAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         startingPosition = transform.position;
-    
+
         Debug.Log("Zombie's starting position set after delay: " + startingPosition);
     }
 
     void Update()
     {
-       
+        if (ZombieHealth.currentHealth <= 0)
+        {
+            if (ZombieSounds != null)
+            {
+                ZombieSounds.StopScrem();
+            }
+        }
         if (navMeshAgent == null || !navMeshAgent.isOnNavMesh) return;
 
         // Calculate the distance to the player
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        
 
-      
+
+
 
         if (distanceToPlayer <= attackRange)
         {
@@ -107,13 +115,13 @@ public class ZombieAI : MonoBehaviour
             if (distanceToPlayer <= detectionRange)
             {
                 // Within detection range but not in attack range, follow the player
-            if (ZombieSounds != null )
-            {
-                ZombieSounds.PlayScrem();
-            }
+                if (ZombieSounds != null)
+                {
+                    ZombieSounds.PlayScrem();
+                }
                 animator.SetBool(WalkParameter, true);
                 animator.SetBool(IdleParameter, false);
-                navMeshAgent.isStopped = false; 
+                navMeshAgent.isStopped = false;
                 navMeshAgent.SetDestination(player.position);
                 isReturning = false;
             }
@@ -122,7 +130,7 @@ public class ZombieAI : MonoBehaviour
                 // Out of detection range, return to starting position
                 if (!isReturning)
                 {
-           
+
                     navMeshAgent.SetDestination(startingPosition);
                     animator.SetBool(WalkParameter, true);
                     animator.SetBool(IdleParameter, false);
@@ -136,16 +144,16 @@ public class ZombieAI : MonoBehaviour
                     animator.SetBool(IdleParameter, true);
                     navMeshAgent.isStopped = true;
                     isReturning = false;
-                    if (ZombieSounds != null )
-                {
-                    ZombieSounds.StopScrem();
-                }
+                    if (ZombieSounds != null)
+                    {
+                        ZombieSounds.StopScrem();
+                    }
                     Debug.Log("Zombie returned to starting position");
                 }
                 else
-{
-    navMeshAgent.isStopped = false; // Ensure movement continues smoothly
-}
+                {
+                    navMeshAgent.isStopped = false; // Ensure movement continues smoothly
+                }
             }
         }
     }
@@ -159,7 +167,7 @@ public class ZombieAI : MonoBehaviour
             animator.SetBool(AttackParameter, false);
             isAttacking = false;
         }
-       
+
 
 
         animator.SetBool(DamageParameter, true);

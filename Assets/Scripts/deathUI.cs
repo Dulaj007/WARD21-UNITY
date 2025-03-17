@@ -22,26 +22,26 @@ public class DeathUI : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        AudioListener.pause = true; 
+        AudioListener.pause = true;
     }
 
     private void LoadGame()
     {
         if (SaveSystem != null)
         {
-            
-            SaveSystem.LoadGame();
-              // Restore health to maximum and reset UI effects
-      playerHealth.RestoreHealth(100); 
-        playerHealth.UpdateBloodEffectsWhenHeal();
-        playerHealth.isDead = false;
 
-        // Disable the Death UI and unpause the game
-        deathUi.SetActive(false);
-        Time.timeScale = 1f;
-        AudioListener.pause = false;
+            SaveSystem.loadbutn();
+            // Restore health to maximum and reset UI effects
+            playerHealth.RestoreHealth(100);
+            playerHealth.UpdateBloodEffectsWhenHeal();
+            playerHealth.isDead = false;
 
-       
+            // Disable the Death UI and unpause the game
+            deathUi.SetActive(false);
+            Time.timeScale = 1f;
+            AudioListener.pause = false;
+
+
 
         }
         else

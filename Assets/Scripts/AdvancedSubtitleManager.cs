@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; // For TextMeshPro
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 

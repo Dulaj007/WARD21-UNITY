@@ -9,7 +9,7 @@ public class OneLineSubTrigger : MonoBehaviour
     public OneLineSubs OneLineSubs;      // Subtitles to show when triggered
     private BoxCollider triggerCollider; // Reference to the Box Collider component
 
-    // Start is called before the first frame update
+
     void Start()
     {
         // Cache the reference to the Box Collider on this GameObject

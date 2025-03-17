@@ -13,7 +13,6 @@ public class AdvancedDoors : MonoBehaviour
     public GameObject closeText;
     public GameObject lockedText;
 
-
     public AudioSource openSound;
     public AudioSource closeSound;
     public AudioSource lockedSound;
@@ -25,9 +24,7 @@ public class AdvancedDoors : MonoBehaviour
     public bool locked;
     public bool unlocked;
 
-    public KeyCode toggleKey = KeyCode.E; 
-
-
+    public KeyCode toggleKey = KeyCode.E;
 
 
 
@@ -65,8 +62,6 @@ public class AdvancedDoors : MonoBehaviour
         closeText.SetActive(false);
         openText.SetActive(false);
     }
-
-
 
 
     void Update()

@@ -10,33 +10,33 @@ public class Elevator : MonoBehaviour
     public GameObject GreenLightTwo;
     public OneLineSubs OneLineSubs;
 
-public GameObject Badend;
-     public GoodEnding end;
+    public GameObject Badend;
+    public GoodEnding end;
     public AudioSource fix;
-     public AudioSource backgroundSound;
-    private bool inReach; 
-    // Start is called before the first frame update
+    public AudioSource backgroundSound;
+    private bool inReach;
+
     void Start()
     {
         if (ElevatorErro != null)
-            {
-                ElevatorErro.SetActive(false); // Show the pick-up text
-            }
-       
-        
+        {
+            ElevatorErro.SetActive(false); // Show the pick-up text
+        }
+
+
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-         if (inReach && Input.GetKeyDown(KeyCode.E))
+        if (inReach && Input.GetKeyDown(KeyCode.E))
         {
             CallElevator();
         }
-        
-        
+
+
     }
-       void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Reach"))
         {
@@ -59,15 +59,15 @@ public GameObject Badend;
             }
             if (ElevatorErro != null)
             {
-                ElevatorErro.SetActive(false); // Show the pick-up text
+                ElevatorErro.SetActive(false);
             }
         }
     }
-     void CallElevator()
-     {
+    void CallElevator()
+    {
         if (GreenLightOne.activeSelf & GreenLightTwo.activeSelf)
         {
-             ButtonText.SetActive(false);  
+            ButtonText.SetActive(false);
             fix.Play();
             Badend.SetActive(true);
             end.goodEnd();
@@ -75,18 +75,18 @@ public GameObject Badend;
         }
         else
         {
-             if (ElevatorErro != null)
+            if (ElevatorErro != null)
             {
                 ElevatorErro.SetActive(true); // Show the pick-up text
                 if (OneLineSubs != null)
-                    {
-                        OneLineSubs.StartOneLineSub();
-                    }
-    
+                {
+                    OneLineSubs.StartOneLineSub();
+                }
+
             }
 
         }
 
 
-     }
+    }
 }

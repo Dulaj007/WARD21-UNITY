@@ -13,10 +13,10 @@ public static class Loader
 
     private static Scene targetScene; // The scene we want to load after the loading scene
 
-    // Public method to initiate scene loading from anywhere (e.g. Main Menu)
+    // Public method to initiate scene loading from anywhere 
     public static void Load(Scene sceneToLoad)
     {
-        // Set the target scene (e.g., Chapter01 or any other scene)
+        // Set the target scene 
         targetScene = sceneToLoad;
 
         // Load the LoadingScene first
@@ -34,7 +34,7 @@ public static class Loader
         }
 
         Debug.Log("Starting to load target scene: " + targetScene);
-        
+
         // Start loading the target scene asynchronously
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene.ToString());
 

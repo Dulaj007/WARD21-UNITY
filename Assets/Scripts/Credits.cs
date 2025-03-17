@@ -9,7 +9,7 @@ public class Credits : MonoBehaviour
     public Animator CreditAnimator;
     public Button ExitButton;
     public AudioSource Click;
-    // Start is called before the first frame update
+
     void Start()
     {
         if (ExitButton != null)
@@ -18,20 +18,21 @@ public class Credits : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-       
-        
+
+
     }
     private void OnEnable()
     {
         CreditAnimator.SetBool("scroll", true);
 
     }
-        private void ExitToMainMenu()
-    {     Click.Play();
-        // Assuming "MainMenu" is the name of your main menu scene
+    private void ExitToMainMenu()
+    {
+        Click.Play();
+
         Time.timeScale = 1f; // Ensure the game is unpaused before changing scenes
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }

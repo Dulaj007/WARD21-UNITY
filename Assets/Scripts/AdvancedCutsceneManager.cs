@@ -5,13 +5,10 @@ public class AdvancedCutsceneManager : MonoBehaviour
 {
     [SerializeField] private PlayableDirector cutscene;
     [SerializeField] private GameObject player;
-    [SerializeField] private GameObject FlashArm;
-    [SerializeField] private GameObject HealArm;
-    [SerializeField] private GameObject GunArm;
-    [SerializeField] private MonoBehaviour cameraController; // Main camera controller
+    [SerializeField] private MonoBehaviour cameraController;
     [SerializeField] private TriggerCutscene triggerCutscene;
 
-    public AdvancedSubtitleManager subtitleManager; // Reference to AdvancedSubtitleManager
+    public AdvancedSubtitleManager subtitleManager;
 
     private PlayerController playerController;
 
@@ -40,8 +37,8 @@ public class AdvancedCutsceneManager : MonoBehaviour
         {
             Debug.LogError("PlayerController component is missing on the player object!");
         }
-       
-        
+
+
     }
 
     public void PlayCutscene()
@@ -63,7 +60,7 @@ public class AdvancedCutsceneManager : MonoBehaviour
         }
 
 
-        cutscene.time = 0; // Reset the cutscene to the start
+        cutscene.time = 0;
         cutscene.Play();
 
         if (subtitleManager != null)
@@ -92,7 +89,7 @@ public class AdvancedCutsceneManager : MonoBehaviour
             subtitleManager.StopSubtitles();
         }
 
-        cutscene.stopped -= OnCutsceneEnd; // Ensure the event is unregistered
+        cutscene.stopped -= OnCutsceneEnd;
     }
 
     void OnDestroy()

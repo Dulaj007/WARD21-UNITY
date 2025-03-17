@@ -7,17 +7,17 @@ public class poison : MonoBehaviour
 {
 
     public bool inReach;
-     public GameObject pickUpText; // Text for displaying "Press X to pick up"
+    public GameObject pickUpText;
     public AudioSource pickUpSound; // Sound to play on picking up the note
     public GameObject GoodEnding;
     public GoodEnding end;
     public AudioSource backgroundSound;
-   
+
     // Start is called before the first frame update
     void Start()
     {
-   
-        
+
+
     }
 
     // Update is called once per frame
@@ -29,9 +29,9 @@ public class poison : MonoBehaviour
 
             Drink();
         }
-        
+
     }
-    
+
     void OnTriggerEnter(Collider other)
     {
         // Check if the player is within reach to interact
@@ -51,20 +51,21 @@ public class poison : MonoBehaviour
             pickUpText.SetActive(false); // Hide the pick-up text
         }
     }
-    public void Drink(){
-
-    pickUpText.SetActive(false);  
-    pickUpSound.Play();
-    end.goodEnd();
-    backgroundSound.Stop();
-
-
-    // Activate the Death UI
-    if (GoodEnding != null)
+    public void Drink()
     {
-        GoodEnding.SetActive(true);
+
+        pickUpText.SetActive(false);
+        pickUpSound.Play();
+        end.goodEnd();
+        backgroundSound.Stop();
+
+
+        // Activate the Death UI
+        if (GoodEnding != null)
+        {
+            GoodEnding.SetActive(true);
+        }
     }
-    }
-    
-  
+
+
 }
