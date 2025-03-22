@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script was created for testing purposes only and will not be used in the final product.
 public class PickUpKey : MonoBehaviour
 {
     public GameObject keyOB;
@@ -11,7 +12,7 @@ public class PickUpKey : MonoBehaviour
 
     public bool inReach;
 
-     public KeyCode toggleKey = KeyCode.E; 
+    public KeyCode toggleKey = KeyCode.E;
 
 
     void Start()
@@ -53,6 +54,6 @@ public class PickUpKey : MonoBehaviour
             pickUpText.SetActive(false);
         }
 
-        
+
     }
 }

@@ -22,7 +22,7 @@ public class ZombieAI : MonoBehaviour
     public ZombieSouns ZombieSounds;
 
     public ZombieHealth ZombieHealth;
-    // Animator parameter hashes
+    // Animator parameter
     private static readonly int IdleParameter = Animator.StringToHash("Idle");
     private static readonly int WalkParameter = Animator.StringToHash("Walk");
     private static readonly int AttackParameter = Animator.StringToHash("Attack");
@@ -173,7 +173,7 @@ public class ZombieAI : MonoBehaviour
         animator.SetBool(DamageParameter, true);
         isDamaged = true;
 
-        // Reset the damage flag after a short delay (adjust as needed)
+        // Reset the damage flag after a short delay 
         Invoke(nameof(ResetDamage), 0.5f);
     }
 
@@ -190,7 +190,7 @@ public class ZombieAI : MonoBehaviour
         }
     }
 
-    // Method to detect if the zombie hits the player during attack (needs a trigger collider setup)
+    // Method to detect if the zombie hits the player during attack 
     private void OnTriggerStay(Collider other)
     {
         if (isAttacking && other.CompareTag("Player"))

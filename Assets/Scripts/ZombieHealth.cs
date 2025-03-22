@@ -16,8 +16,8 @@ public class ZombieHealth : MonoBehaviour
     private static readonly float DeathDelay = 15f; // Delay before the zombie disappears after dying
     public float smoothMoveDuration = 0.0001f;    // Duration for the smooth transition
 
-    public float smoothMoveLength = -1.5f; 
- public ZombieSouns ZombieSounds;
+    public float smoothMoveLength = -1.5f;
+    public ZombieSouns ZombieSounds;
     void Start()
     {
         // Initialize the current health to the maximum health
@@ -46,20 +46,20 @@ public class ZombieHealth : MonoBehaviour
             audioSource.PlayOneShot(hitSound);
         }
 
-         // Trigger the damage animation
+
         if (animator != null)
         {
-            //animator.SetBool(ZombieDamagedParameter, true); // Set the Damage parameter to true
+
             GetComponent<ZombieAI>()?.HandleDamage();
         }
 
         // Check if the health has dropped to zero or below
         if (currentHealth <= 0)
         {
-                if (ZombieSounds != null )
-                {
-                    ZombieSounds.StopScrem();
-                }
+            if (ZombieSounds != null)
+            {
+                ZombieSounds.StopScrem();
+            }
             Die();
         }
     }
@@ -97,14 +97,14 @@ public class ZombieHealth : MonoBehaviour
         Destroy(gameObject, DeathDelay);
 
         // Play the destruction effect if available
-        if (destructionEffect != null)
+        if (destructionEffect != null)//not used
         {
             ParticleSystem effectInstance = Instantiate(destructionEffect, transform.position, transform.rotation);
             Destroy(effectInstance.gameObject, effectInstance.main.duration);
         }
     }
 
-    // Coroutine to add a delay before smoothly moving to the target Y position
+    // Coroutine to add a delay before smoothly moving to the target Y position (target Y is dead position)
     private IEnumerator DelayedSmoothMoveToYPosition(float targetY, float duration, float delay)
     {
         // Wait for the specified delay

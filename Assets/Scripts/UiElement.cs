@@ -1,8 +1,9 @@
 using UnityEngine;
 
+//This script was created for testing purposes only and will not be used in the final product.
 public class UiElement : MonoBehaviour
 {
-    // Drag-and-drop reference to the GameObject to monitor
+
     [SerializeField] private GameObject targetGameObject;
 
     // Keeps track of the last known state of the target GameObject

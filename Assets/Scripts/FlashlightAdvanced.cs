@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//This script was created for testing purposes only and will not be used in the final product.
 public class FlashlightToggle : MonoBehaviour
 {
     // Reference to the Light component that will act as the flashlight

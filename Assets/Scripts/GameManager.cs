@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
+//This script was created for testing purposes only and will not be used in the final product.
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        savePath = Application.persistentDataPath + "/gameSave.json";
+        savePath = Application.persistentDataPath + "/gameSave.json"; //Game save file path C:\Users\Username\AppData\LocalLow\CompanyName\GameName
 
         if (loadButton != null)
             loadButton.onClick.AddListener(LoadGame);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SimpleDoor : MonoBehaviour
 {
-    // These will now show up in the Unity Inspector
+
     public Animator door;            // Reference to the Animator controlling door animations
     public GameObject openText;      // UI text to prompt the player to open the door
     public KeyCode toggleKey = KeyCode.E; // Key to interact with the door
@@ -37,7 +37,7 @@ public class SimpleDoor : MonoBehaviour
     void Update()
     {
         // If the player is in range and presses 'E' to open the door
-        if (inReach && !doorIsOpen && Input.GetKeyDown(toggleKey)) 
+        if (inReach && !doorIsOpen && Input.GetKeyDown(toggleKey))
         {
             OpenDoor();
         }
@@ -47,9 +47,9 @@ public class SimpleDoor : MonoBehaviour
     {
         door.SetBool("Open", true);  // Trigger the "Open" animation in the Animator
         if (Voice != null)
-            {
-                Voice.Play();
-            }
+        {
+            Voice.Play();
+        }
         openText.SetActive(false);   // Hide the prompt
         doorIsOpen = true;           // Mark the door as opened to prevent further interaction
     }

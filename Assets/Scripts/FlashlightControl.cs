@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class FlashlightControl : MonoBehaviour
 {
-    public Light flashlight; // Drag and drop the flashlight Light component here
+    //This script was created for testing purposes only and will not be used in the final product.
+    public Light flashlight;
 
     // Method to turn on the flashlight
     public void TurnOnFlashlight()

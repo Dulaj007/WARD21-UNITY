@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//This script was created for testing purposes only and will not be used in the final product.
 public class ShootableObject : MonoBehaviour
 {
     public int maxHealth = 100; // Maximum health of the shootable object

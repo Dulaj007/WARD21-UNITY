@@ -57,7 +57,7 @@ public class MainMenuUI : MonoBehaviour
         }
         if (NowLoading != null)
         {
-            NowLoading.SetActive(false); // Hide the pick-up text initially
+            NowLoading.SetActive(false);
 
         }
         if (settingsBtn != null)

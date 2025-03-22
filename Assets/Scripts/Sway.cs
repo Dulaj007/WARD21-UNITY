@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script was created for testing purposes only and will not be used in the final product.
 public class Sway : MonoBehaviour
 {
     public float swayAmount = 0.5f;      // The amount of sway to apply to the pistol

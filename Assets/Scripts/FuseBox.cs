@@ -7,24 +7,24 @@ public class FuseBox : MonoBehaviour
     public GameObject ButtonText;
     public GameObject RedLight;
     public GameObject GreenLight;
-         public OneLineSubs OneLineSubs;
-       
+    public OneLineSubs OneLineSubs;
 
-    private bool inReach; 
+
+    private bool inReach;
     // Start is called before the first frame update
     void Start()
     {
-         if (RedLight != null)
+        if (RedLight != null)
         {
             RedLight.SetActive(true);
-           
+
         }
         if (GreenLight != null)
         {
             GreenLight.SetActive(false);
 
         }
-        
+
     }
 
     // Update is called once per frame
@@ -34,9 +34,9 @@ public class FuseBox : MonoBehaviour
         {
             TurnOnFuse();
         }
-        
+
     }
-    
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Reach"))
@@ -44,7 +44,7 @@ public class FuseBox : MonoBehaviour
             inReach = true;
             if (ButtonText != null)
             {
-                ButtonText.SetActive(true); // Show the pick-up text
+                ButtonText.SetActive(true); // Show the  text
             }
         }
     }
@@ -56,7 +56,7 @@ public class FuseBox : MonoBehaviour
             inReach = false;
             if (ButtonText != null)
             {
-                ButtonText.SetActive(false); // Hide the pick-up text
+                ButtonText.SetActive(false); // Hide the text
             }
         }
     }
@@ -65,14 +65,14 @@ public class FuseBox : MonoBehaviour
         if (RedLight != null)
         {
             RedLight.SetActive(false);
-           
+
         }
         if (GreenLight != null)
         {
             GreenLight.SetActive(true);
 
         }
-            if (OneLineSubs != null)
+        if (OneLineSubs != null)
         {
             OneLineSubs.StartOneLineSub();
         }

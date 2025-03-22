@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script was created for testing purposes only and will not be used in the final product.
 public class KeyPickUp : MonoBehaviour
 {
     public GameObject handUI;

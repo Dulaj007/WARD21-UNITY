@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+//This script was created for testing purposes only and will not be used in the final product.
 public class PlayerHealthNew : MonoBehaviour
 {
     [Header("Player Health Settings")]
@@ -31,7 +32,7 @@ public class PlayerHealthNew : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, 100); // Clamp health between 0 and 100
         Debug.Log("Player took damage: " + damage + ", Remaining health: " + currentHealth); // Log the current health
 
-       
+
         UpdateBloodEffects(); // Update blood effect visuals
 
         if (currentHealth <= 0)
@@ -69,7 +70,7 @@ public class PlayerHealthNew : MonoBehaviour
     /// <summary>
     /// Simulates a flashing effect when the player takes damage.
     /// </summary>
-  
+
 
     /// <summary>
     /// Handles player death.

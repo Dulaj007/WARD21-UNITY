@@ -16,7 +16,7 @@ public class LightToggleByPlayerRange : MonoBehaviour
             this.enabled = false;
         }
 
-        // Ensure the player Transform is assigned
+        // player Transform is assigned
         if (player == null)
         {
             Debug.LogError("Player reference not assigned. Please assign the player Transform.");

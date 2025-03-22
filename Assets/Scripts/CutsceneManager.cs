@@ -12,7 +12,7 @@ public class CutsceneManager : MonoBehaviour
 
     public GameObject TutorialUI;
 
-   
+
 
     void Start()
     {
@@ -23,11 +23,11 @@ public class CutsceneManager : MonoBehaviour
             return;
         }
 
-      
 
-        
-        
-        
+
+
+
+
         cutscene.stopped += OnCutsceneEnd; // Re-enable controls when cutscene finishes
     }
 
@@ -42,7 +42,7 @@ public class CutsceneManager : MonoBehaviour
         {
             cameraController.enabled = true;
         }
-         if (subtitleManager02 != null)
+        if (subtitleManager02 != null)
         {
             subtitleManager02.StartSubtitles();
         }
@@ -53,9 +53,10 @@ public class CutsceneManager : MonoBehaviour
     {
         cutscene.stopped -= OnCutsceneEnd; // Unregister event to prevent memory leaks
     }
-    public void playCutscene(){
+    public void playCutscene()
+    {
         cutscene.Play();
-          // Get the player controller reference
+        // Get the player controller reference
         playerController = player.GetComponent<PlayerController>();
 
         // Disable player and camera control
@@ -68,9 +69,9 @@ public class CutsceneManager : MonoBehaviour
             cameraController.enabled = false;
         }
 
-        // Start the cutscene
-        
-        
+
+
+
         // Start subtitles if SubtitleManager is assigned
         if (subtitleManager != null)
         {

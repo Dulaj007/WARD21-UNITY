@@ -20,7 +20,7 @@ public class Elevator : MonoBehaviour
     {
         if (ElevatorErro != null)
         {
-            ElevatorErro.SetActive(false); // Show the pick-up text
+            ElevatorErro.SetActive(false);
         }
 
 
@@ -43,7 +43,7 @@ public class Elevator : MonoBehaviour
             inReach = true;
             if (ButtonText != null)
             {
-                ButtonText.SetActive(true); // Show the pick-up text
+                ButtonText.SetActive(true);
             }
         }
     }
@@ -55,7 +55,7 @@ public class Elevator : MonoBehaviour
             inReach = false;
             if (ButtonText != null)
             {
-                ButtonText.SetActive(false); // Hide the pick-up text
+                ButtonText.SetActive(false);
             }
             if (ElevatorErro != null)
             {
@@ -77,7 +77,7 @@ public class Elevator : MonoBehaviour
         {
             if (ElevatorErro != null)
             {
-                ElevatorErro.SetActive(true); // Show the pick-up text
+                ElevatorErro.SetActive(true);
                 if (OneLineSubs != null)
                 {
                     OneLineSubs.StartOneLineSub();

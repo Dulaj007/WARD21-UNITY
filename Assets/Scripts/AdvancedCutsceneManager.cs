@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Playables;
-
+//This script was created for testing purposes only and will not be used in the final product.
 public class AdvancedCutsceneManager : MonoBehaviour
 {
     [SerializeField] private PlayableDirector cutscene;

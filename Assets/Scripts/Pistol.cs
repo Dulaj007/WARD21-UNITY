@@ -8,7 +8,7 @@ public class Pistol : MonoBehaviour
     public int maxAmmoInStorage = 30;       // Maximum ammo capacity in the storage
     public float shootCooldown = 0.5f;      // Cooldown time between shots
     public float reloadCooldown = 0.5f;     // Cooldown time for reloading
-  
+
     public float shootRange = 100f;         // Range of the raycast
     public int damage = 15;                 // Damage dealt by the gun
 
@@ -75,20 +75,22 @@ public class Pistol : MonoBehaviour
 
 
     }
-    public void TurnOnHealAnimation() {
-      
-            isHealing = true;
-             gun.SetBool("Heal", true);
-                 Debug.Log("turn on animation called confirmed in pistol" );
-                 
+    public void TurnOnHealAnimation()
+    {
+
+        isHealing = true;
+        gun.SetBool("Heal", true);
+        Debug.Log("turn on animation called confirmed in pistol");
+
 
     }
 
-    public void TurnOffHealAnimation() {
-      
-            isHealing = false;
-             gun.SetBool("Heal", false);
-                 Debug.Log("turn on animation called confirmed in pistol" );
+    public void TurnOffHealAnimation()
+    {
+
+        isHealing = false;
+        gun.SetBool("Heal", false);
+        Debug.Log("turn on animation called confirmed in pistol");
 
     }
 
@@ -119,56 +121,55 @@ public class Pistol : MonoBehaviour
             RaycastHit hit;
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.red, 1f);
 
-         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange))
-{
-    // Log when the raycast hits something
-    Debug.Log("Raycast hit something at: " + hit.point);
-
-    // Check if the hit object has the "enemy" tag
-    if (hit.collider.CompareTag("Enemy"))
-    {
-        Debug.Log("Hit an enemy: " + hit.collider.name); // Log the name of the enemy hit
-
-        // Check if the hit object has a ZombieHealth component
-        ZombieHealth zombieHealth = hit.collider.GetComponent<ZombieHealth>();
-
-        // Apply damage if the ZombieHealth component is found
-        if (zombieHealth != null)
-        {
-            zombieHealth.TakeDamage(damage); // Apply damage
-            Debug.Log("Damage applied to zombie: " + hit.collider.name); // Log the damage application
-             
-             if (EnemyImpactEffect != null)
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange))
             {
-            Instantiate(EnemyImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            }
-        
-        }
-        else
-        {
-            Debug.Log("ZombieHealth component not found on the hit object.");
-              
-        }
-    }
-    else
-    {
-        Debug.Log("Hit an object that is not an enemy: " + hit.collider.name);
-         if (impactEffect != null)
-            {
-                Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            }
-    }
+                // Log when the raycast hits something
+                Debug.Log("Raycast hit something at: " + hit.point);
 
-    // Instantiate impact effect at the hit point
+                // Check if the hit object has the "enemy" tag
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    Debug.Log("Hit an enemy: " + hit.collider.name); // Log the name of the enemy hit
+
+                    // Check if the hit object has a ZombieHealth component
+                    ZombieHealth zombieHealth = hit.collider.GetComponent<ZombieHealth>();
+
+                    // Apply damage if the ZombieHealth component is found
+                    if (zombieHealth != null)
+                    {
+                        zombieHealth.TakeDamage(damage); // Apply damage
+                        Debug.Log("Damage applied to zombie: " + hit.collider.name); // Log the damage application
+
+                        if (EnemyImpactEffect != null)
+                        {
+                            Instantiate(EnemyImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                        }
+
+                    }
+                    else
+                    {
+                        Debug.Log("ZombieHealth component not found on the hit object.");
+
+                    }
+                }
+                else
+                {
+                    Debug.Log("Hit an object that is not an enemy: " + hit.collider.name);
+                    if (impactEffect != null)
+                    {
+                        Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    }
+                }
+
 
             }
 
-            // Instantiate the empty cartridge
+            // Instantiate the empty cartridge (new one every time player shoot)
             if (cartridgePrefab != null && cartridgeEjectionPoint != null)
             {
                 GameObject cartridge = Instantiate(cartridgePrefab, cartridgeEjectionPoint.position, cartridgeEjectionPoint.rotation);
-                Rigidbody cartridgeRigidbody = cartridge.GetComponent<Rigidbody>();
-                cartridgeRigidbody.AddForce(cartridgeEjectionPoint.right * cartridgeEjectionForce, ForceMode.Impulse);
+                Rigidbody cartridgeRigidbody = cartridge.GetComponent<Rigidbody>(); // Rigidbody allows the cartridge to be affected by physics, enabling the ejection force to push it away from the gun.
+                cartridgeRigidbody.AddForce(cartridgeEjectionPoint.right * cartridgeEjectionForce, ForceMode.Impulse); //Apply Force to the Cartridge
             }
 
             // Reduce ammo count
@@ -210,7 +211,7 @@ public class Pistol : MonoBehaviour
         if (bulletsToReload > 0)
         {
             gun.SetBool("reload", true); // Use SetBool to play the animation
-              if (reload != null)
+            if (reload != null)
             {
                 reload.Play();
             }

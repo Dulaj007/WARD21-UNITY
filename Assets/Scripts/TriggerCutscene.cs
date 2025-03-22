@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+//This script was created for testing purposes only and will not be used in the final product.
 public class TriggerCutscene : MonoBehaviour
 {
     public GameObject interactText; // UI text for interaction prompt

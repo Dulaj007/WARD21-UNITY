@@ -8,7 +8,7 @@ public class poison : MonoBehaviour
 
     public bool inReach;
     public GameObject pickUpText;
-    public AudioSource pickUpSound; // Sound to play on picking up the note
+    public AudioSource pickUpSound;
     public GameObject GoodEnding;
     public GoodEnding end;
     public AudioSource backgroundSound;

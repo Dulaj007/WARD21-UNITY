@@ -5,23 +5,23 @@ using UnityEngine.UI;
 
 public class HealthPick : MonoBehaviour
 {
-    public GameObject Heal01; 
-    public GameObject Heal02; 
-    public GameObject Heal03; 
+    public GameObject Heal01;
+    public GameObject Heal02;
+    public GameObject Heal03;
 
     public GameObject UIShow01;
-     public GameObject UIShow02;
-      public GameObject UIShow03;
+    public GameObject UIShow02;
+    public GameObject UIShow03;
     public GameObject pickUpText; // UI text to show when the player is near the object
     public AudioSource pickUpSound; // Sound to play when the object is picked up
 
     private bool inReach; // Flag to check if the player is within reach to interact
-       void Start()
+    void Start()
     {
         if (pickUpText != null)
         {
             pickUpText.SetActive(false); // Hide the pick-up text initially
-     
+
         }
 
         if (Heal01 != null)
@@ -31,10 +31,10 @@ public class HealthPick : MonoBehaviour
         else
         {
             Debug.LogError("Hand with item (handWithItem) is not assigned in the Inspector.");
-        
-       
+
+
         }
-         if (Heal02 != null)
+        if (Heal02 != null)
         {
             Heal02.SetActive(false); // Ensure the hand with item is initially disabled
         }
@@ -51,11 +51,11 @@ public class HealthPick : MonoBehaviour
         {
             Debug.LogError("Hand with item (handWithItem) is not assigned in the Inspector.");
         }
-         if (UIShow02 != null)
+        if (UIShow02 != null)
         {
             UIShow02.SetActive(false); // Ensure the hand with item is initially disabled
         }
-         if (UIShow03 != null)
+        if (UIShow03 != null)
         {
             UIShow03.SetActive(false); // Ensure the hand with item is initially disabled
         }
@@ -94,20 +94,20 @@ public class HealthPick : MonoBehaviour
         }
     }
 
-    void PickUp() 
+    void PickUp()
     {
-      
 
-        if ( Heal02.activeSelf )
+
+        if (Heal02.activeSelf)
         {
-            // Activate
-             Heal03.SetActive(true);
-          
+
+            Heal03.SetActive(true);
+
         }
         if (Heal01.activeSelf)
         {
             Heal02.SetActive(true);
-         
+
         }
         else
         {
@@ -115,16 +115,16 @@ public class HealthPick : MonoBehaviour
         }
 
 
-        if ( UIShow02.activeSelf )
+        if (UIShow02.activeSelf)
         {
-            // Activate
-             UIShow03.SetActive(true);
-          
+
+            UIShow03.SetActive(true);
+
         }
         if (UIShow01.activeSelf)
         {
             UIShow02.SetActive(true);
-         
+
         }
         else
         {

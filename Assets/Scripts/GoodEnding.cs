@@ -22,7 +22,7 @@ public class GoodEnding : MonoBehaviour
         if (Continue != null)
         {
             Continue.onClick.AddListener(ContinueCredits);
-            Continue.gameObject.SetActive(false); // Ensure Continue button is hidden initially
+            Continue.gameObject.SetActive(false); // Ensure Continue button is hidden
         }
     }
 

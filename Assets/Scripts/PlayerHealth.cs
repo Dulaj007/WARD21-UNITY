@@ -28,10 +28,10 @@ public class PlayerHealth : MonoBehaviour
     public GameObject health2;               // Inventory slot for the second health item
     public GameObject health3;               // Inventory slot for the third health item
 
-    // Message to display when picking up health items
 
 
-    public GameObject NoHelthItemsText;
+
+    public GameObject NoHelthItemsText;  // Message to display when picking up health items
 
     public bool isDead = false;             // Flag to check if player is dead
     private float healCooldown = 3f;         // Cooldown time for healing
@@ -60,7 +60,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (Input.GetKeyDown(healingKey))
         {
-            UseHealthItem();
+            UseHealthItem(); //using healing items to heal
         }
 
 
@@ -86,7 +86,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Coroutine to flash player when taking damage
+
 
 
     // Method to handle player death
@@ -108,11 +108,11 @@ public class PlayerHealth : MonoBehaviour
             deathUI.SetActive(true);
         }
 
-        // Optionally disable player controls or other logic related to player death
+
         Debug.Log("Player has died. Game paused and Death UI displayed.");
     }
 
-    // Method to restore health (e.g., when picking up health packs)
+    // Method to restore health when load game
     public void RestoreHealth(float amount)
     {
         // if (isDead) return; // Can't restore health if already dead
@@ -122,7 +122,7 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    public IEnumerator noHeals()
+    public IEnumerator noHeals()//if player dose not have any heal items
     {
         Debug.Log("Player can not use helth items ");
         NoHelthItemsText.SetActive(true);
@@ -131,10 +131,10 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    // Method to use a health item
 
 
-    public void UseHealthItem()
+
+    public void UseHealthItem()// Method to use a health item
     {
         if (canHeal && (health1.activeSelf || health2.activeSelf || health3.activeSelf))
         {
@@ -156,15 +156,15 @@ public class PlayerHealth : MonoBehaviour
         if (pistolAnimation == null)
         {
             pistolAnimation = FindObjectOfType<Pistol>();
-            Debug.Log("Pistol reference reassigned dynamically before calling the method");
+
 
             Debug.Log("calling pistal for health");
             pistolAnimation.TurnOnHealAnimation(); // Turn ON the healing animation
         }
         else
         {
-            Debug.Log("calling pistal for health");
-            pistolAnimation.TurnOnHealAnimation(); // Turn ON the healing animation
+            //Debug.Log("calling pistal for health");
+            //pistolAnimation.TurnOnHealAnimation(); // Turn ON the healing animation
         }
 
         if (healingArmAnimation != null)
@@ -206,11 +206,11 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(3f);
         if (healingArmAnimation != null)
         {
-            healingArmAnimation.TurnOffHealAnimation(); // Turn ON the healing animation
+            healingArmAnimation.TurnOffHealAnimation(); // Turn Offs the healing animation
         }
         if (pistolAnimation != null)
         {
-            pistolAnimation.TurnOffHealAnimation(); // Turn ON the healing animation
+            pistolAnimation.TurnOffHealAnimation(); // Turn Off the healing animation
 
         }
         canHeal = false; // Disable healing
@@ -222,8 +222,7 @@ public class PlayerHealth : MonoBehaviour
     /// Updates the blood effect visuals based on the player's current health.
     public void UpdateBloodEffects()
     {
-        // Deactivate all blood images first
-        // DeactivateBloodEffects();
+
 
         // Activate images based on current health
         if (currentHealth < 80) bloodImage1.gameObject.SetActive(true);
