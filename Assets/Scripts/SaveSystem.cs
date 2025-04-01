@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using System.Linq;
 public class SaveSystem : MonoBehaviour
 {
     public GameObject player;
@@ -53,7 +53,7 @@ public class SaveSystem : MonoBehaviour
         {
             LoadingSaveScreen.SetActive(true);
             Debug.Log("New Game is false");
-            StartCoroutine(WaitTOLoad(5f));
+            StartCoroutine(WaitTOLoad(10f));
 
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -97,15 +97,15 @@ public class SaveSystem : MonoBehaviour
             // Save player position
             data.playerPosition = player.transform.position;
 
-            // Save zombie data
+            // Save zombie data - Only add alive zombies to the save data
             foreach (var zombie in zombies)
             {
-                if (zombie != null)
+                if (zombie != null && zombie.activeSelf) // Only save if zombie is still alive
                 {
                     ZombieData zData = new ZombieData
                     {
                         position = zombie.transform.position,
-                        isAlive = zombie.activeSelf //save according to active state
+                        isAlive = true // Save as alive if active
                     };
                     data.zombies.Add(zData);
                 }
@@ -199,31 +199,42 @@ public class SaveSystem : MonoBehaviour
         Debug.Log("Player position after loading: " + player.transform.position);
 
         // Restore zombie data
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); // Find all zombies by tag
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        // This ensures that if the number of zombies in the scene differs from the number of zombies in the saved game data
-        //  it won't cause out of bounds errors. It sets zombieCount to the smaller of the two numbers.
-        int zombieCount = Mathf.Min(enemies.Length, LoadedGameData.zombies.Count);
-
-
-        for (int i = 0; i < zombieCount; i++)
+        // Only restore zombies that exist in the save data
+        for (int i = 0; i < LoadedGameData.zombies.Count; i++)
         {
-            GameObject zombie = enemies[i];
             ZombieData zData = LoadedGameData.zombies[i];
 
-            if (zombie.TryGetComponent(out Rigidbody zombieRb))
+            // Check if zombie exists in the scene and restore position only if alive
+            GameObject zombie = enemies.FirstOrDefault(e => e.transform.position == zData.position);
+            if (zombie != null)
             {
-                zombieRb.MovePosition(zData.position); // Use Rigidbody for smooth positioning
+                zombie.SetActive(zData.isAlive); // Only restore alive zombies
+                if (!zData.isAlive)
+                {
+                    Destroy(zombie);
+                }
+
+
+                if (zombie.TryGetComponent(out Rigidbody zombieRb))
+                {
+                    zombieRb.MovePosition(zData.position);
+                }
+                else
+                {
+                    zombie.transform.position = zData.position;
+                }
             }
             else
             {
-                zombie.transform.position = zData.position; // Standard transform update
+                // If zombie does not exist anymore (killed and not in the scene), skip restoring it
+                Debug.Log("Zombie at " + zData.position + " does not exist anymore.");
             }
-
-            zombie.SetActive(zData.isAlive); // Set active state (alive or not) false or true
         }
 
-        Debug.Log("Zombies restored: " + zombieCount);
+        Debug.Log("Zombies restored: " + LoadedGameData.zombies.Count);
+
 
         // Restore door data 
         // Doors are not find by using a tag its simply set active all the selected gameobjects
