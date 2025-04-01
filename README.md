@@ -1,5 +1,5 @@
 # 🏥 WARD 21 - Indie Horror Game 🎮👻  
-[url=https://postimg.cc/SnWYWP5Q][img]https://i.postimg.cc/fRP7hnfd/1-18.png[/img][/url]
+![Alt text](https://i.postimg.cc/fRP7hnfd/1-18.png)
 **WARD 21** is a gripping single-player indie horror game developed using **Unity & C#**. Set in an abandoned hospital in Sri Lanka after the spread of the **VX-21 virus**, players must navigate eerie hallways, uncover dark secrets, and survive the horrors lurking in the shadows.  
 
 🚀 **Download Now:** [Ward21.info.gf](url) *(Free to Play!)*   
