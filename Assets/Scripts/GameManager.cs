@@ -122,25 +122,14 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Player reference is not set in the GameManager!");
         }
 
-        // Restore zombies
-        var zombieObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("Zombie"));
-        for (int i = 0; i < zombieObjects.Count && i < LoadedGameData.zombies.Count; i++)
-        {
-            var zombieData = LoadedGameData.zombies[i];
-            if (zombieObjects[i] != null)
-            {
-                zombieObjects[i].transform.position = zombieData.position;
-                zombieObjects[i].SetActive(zombieData.isAlive);
-            }
-        }
 
         // Restore doors
         var doorObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("Door"));
-        for (int i = 0; i < doorObjects.Count && i < LoadedGameData.doors.Count; i++)
+        for (int i = 0; i < doorObjects.Count && i < LoadedGameData.saveitems.Count; i++)
         {
             if (doorObjects[i] != null)
             {
-                doorObjects[i].SetActive(!LoadedGameData.doors[i].isLocked);
+                doorObjects[i].SetActive(!LoadedGameData.saveitems[i].isLocked);
             }
         }
 

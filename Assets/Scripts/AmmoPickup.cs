@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 
@@ -10,6 +11,8 @@ public class AmmoPickup : MonoBehaviour
     public bool inReach;                 // Flag to check if the player is within reach
 
     public Pistol playerPistol;          // Reference to the player's pistol script
+
+    public GameObject ammoErrorMsg;
 
     void Start()
     {
@@ -64,29 +67,35 @@ public class AmmoPickup : MonoBehaviour
 
     void PickUpAmmo()
     {
-        if (playerPistol != null)
+        if (playerPistol.currentAmmoInStorage >= playerPistol.maxAmmoInStorage)
         {
-            Debug.Log("Picking up ammo...");
-            Debug.Log("Ammo before pickup: " + playerPistol.currentAmmoInStorage);
-
-            // Add ammo to the pistol storage
-            playerPistol.currentAmmoInStorage += ammoAmount;
-            playerPistol.UpdateAmmoDisplay();
-
-            Debug.Log("Ammo after pickup: " + playerPistol.currentAmmoInStorage);
-
-            // Play the pick-up sound
-            if (pickUpSound != null)
+            // Show error message and don't pick up the ammo
+            if (ammoErrorMsg != null)
             {
-                pickUpSound.Play();
+                ammoErrorMsg.SetActive(true);
+                StartCoroutine(HideErrorMessage());
             }
-            if (pickUpText != null)
-            {
-                pickUpText.SetActive(false); // Hide the pick-up text
-            }
-
-            // Destroy the ammo object
-            Destroy(gameObject);
+            return; // Exit method early
         }
+
+        // Proceed with pickup
+        playerPistol.currentAmmoInStorage += ammoAmount;
+        playerPistol.currentAmmoInStorage = Mathf.Min(playerPistol.currentAmmoInStorage, playerPistol.maxAmmoInStorage); // clamp
+        playerPistol.UpdateAmmoDisplay();
+
+        if (pickUpSound != null)
+            pickUpSound.Play();
+
+        if (pickUpText != null)
+            pickUpText.SetActive(false);
+
+        Destroy(gameObject);
+    }
+
+    IEnumerator HideErrorMessage()
+    {
+        yield return new WaitForSeconds(3f);
+        if (ammoErrorMsg != null)
+            ammoErrorMsg.SetActive(false);
     }
 }

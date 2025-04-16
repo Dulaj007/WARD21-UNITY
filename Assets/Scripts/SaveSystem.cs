@@ -10,8 +10,7 @@ public class SaveSystem : MonoBehaviour
     public GameObject player;
 
     public GameObject LoadingSaveScreen;
-    public List<GameObject> zombies = new List<GameObject>();
-    public List<GameObject> doors = new List<GameObject>();
+    public List<GameObject> SaveItems = new List<GameObject>();
     public GameObject saveDone;
     public GameObject saveFailed;
 
@@ -97,29 +96,17 @@ public class SaveSystem : MonoBehaviour
             // Save player position
             data.playerPosition = player.transform.position;
 
-            // Save zombie data - Only add alive zombies to the save data
-            foreach (var zombie in zombies)
-            {
-                if (zombie != null && zombie.activeSelf) // Only save if zombie is still alive
-                {
-                    ZombieData zData = new ZombieData
-                    {
-                        position = zombie.transform.position,
-                        isAlive = true // Save as alive if active
-                    };
-                    data.zombies.Add(zData);
-                }
-            }
 
-            // Save door data
+
+            // Save data
             // later this method used save some other gameobject as well
-            foreach (var door in doors)
+            foreach (var saveitem in SaveItems)
             {
-                DoorData dData = new DoorData
+                SaveData dData = new SaveData
                 {
-                    isLocked = door.activeSelf //save according to active state of the object
+                    isLocked = saveitem.activeSelf //save according to active state of the object
                 };
-                data.doors.Add(dData);
+                data.saveitems.Add(dData);
             }
 
             // Write to JSON file
@@ -198,66 +185,27 @@ public class SaveSystem : MonoBehaviour
 
         Debug.Log("Player position after loading: " + player.transform.position);
 
-        // Restore zombie data
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        // Only restore zombies that exist in the save data
-        for (int i = 0; i < LoadedGameData.zombies.Count; i++)
+        int SaveitemCount = Mathf.Min(SaveItems.Count, LoadedGameData.saveitems.Count); // Handle mismatched counts
+
+        for (int i = 0; i < SaveitemCount; i++)
         {
-            ZombieData zData = LoadedGameData.zombies[i];
-
-            // Check if zombie exists in the scene and restore position only if alive
-            GameObject zombie = enemies.FirstOrDefault(e => e.transform.position == zData.position);
-            if (zombie != null)
-            {
-                zombie.SetActive(zData.isAlive); // Only restore alive zombies
-                if (!zData.isAlive)
-                {
-                    Destroy(zombie);
-                }
-
-
-                if (zombie.TryGetComponent(out Rigidbody zombieRb))
-                {
-                    zombieRb.MovePosition(zData.position);
-                }
-                else
-                {
-                    zombie.transform.position = zData.position;
-                }
-            }
-            else
-            {
-                // If zombie does not exist anymore (killed and not in the scene), skip restoring it
-                Debug.Log("Zombie at " + zData.position + " does not exist anymore.");
-            }
-        }
-
-        Debug.Log("Zombies restored: " + LoadedGameData.zombies.Count);
-
-
-        // Restore door data 
-        // Doors are not find by using a tag its simply set active all the selected gameobjects
-        int doorCount = Mathf.Min(doors.Count, LoadedGameData.doors.Count); // Handle mismatched counts
-
-        for (int i = 0; i < doorCount; i++)
-        {
-            GameObject door = doors[i];
-            DoorData dData = LoadedGameData.doors[i];
+            GameObject SaveItem = SaveItems[i];
+            SaveData dData = LoadedGameData.saveitems[i];
 
             // Set door lock state (locked or unlocked)
 
             // Here, just enable or disable the door based on the saved state
             // door.SetActive(dData.isLocked);  (this is the simple way to store door data)
-            if (door != null)
+            if (SaveItem != null)
             {
                 if (dData.isLocked == true)
                 {
-                    door.SetActive(true); // Activate the door (locked)
+                    SaveItem.SetActive(true); // Activate the door (locked)
                 }
                 else
                 {
-                    door.SetActive(false); // Deactivate the door (unlocked)
+                    SaveItem.SetActive(false); // Deactivate the door (unlocked)
                 }
                 // If locked (isLocked == true), set inactive (locked); else, active (unlocked)
                 Debug.Log(dData.isLocked);
@@ -265,7 +213,7 @@ public class SaveSystem : MonoBehaviour
             }
         }
 
-        Debug.Log("Doors restored: " + doorCount);
+        Debug.Log("Doors restored: " + SaveitemCount);
 
 
     }
@@ -289,19 +237,14 @@ public class SaveSystem : MonoBehaviour
 public class GameData
 {
     public Vector3 playerPosition;
-    public List<ZombieData> zombies = new List<ZombieData>();
-    public List<DoorData> doors = new List<DoorData>();
+
+    public List<SaveData> saveitems = new List<SaveData>();
 }
 
-[System.Serializable]
-public class ZombieData
-{
-    public Vector3 position;
-    public bool isAlive;
-}
+
 
 [System.Serializable]
-public class DoorData
+public class SaveData
 {
     public bool isLocked;
 }

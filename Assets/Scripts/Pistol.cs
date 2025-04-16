@@ -132,7 +132,7 @@ public class Pistol : MonoBehaviour
                     Debug.Log("Hit an enemy: " + hit.collider.name); // Log the name of the enemy hit
 
                     // Check if the hit object has a ZombieHealth component
-                    ZombieHealth zombieHealth = hit.collider.GetComponent<ZombieHealth>();
+                    ZombieHealthv2 zombieHealth = hit.collider.GetComponent<ZombieHealthv2>();
 
                     // Apply damage if the ZombieHealth component is found
                     if (zombieHealth != null)
